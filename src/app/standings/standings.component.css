@@ -1,0 +1,45 @@
+mat-table {
+    overflow-x: auto;
+    border-collapse: collapse;
+}
+@media (max-width:767px) {
+    mat-cell, mat-header-cell {
+        word-wrap: initial;
+        display: table-cell;
+        padding: 0px 10px;
+        line-break: unset;
+        width: auto;
+        white-space: pre;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+    mat-row, mat-header-row {
+        display: table-row;
+    }
+}
+mat-card {
+    max-width: 80%;
+    transform: translateX(10%);
+    margin-bottom: 4px;
+}
+mat-spinner {
+    margin: 0 auto;
+}
+p {
+    margin-top: 1%;
+    font-size: medium;
+    margin-right: 3%;
+    margin-left: 3%;
+    margin: 1% 3% 1% 3%;
+}
+p.wins {
+    float: right;
+    margin-right: 10%;
+}
+p.name {
+    float: left;
+    margin-left: 10%;
+}
+h2 {
+    margin-top: 5px;
+}

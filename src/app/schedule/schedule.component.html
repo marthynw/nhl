@@ -1,0 +1,29 @@
+<mat-form-field appearance="fill">
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" [value]="today" (dateInput)="changeDate($event.value)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+<ng-container *ngFor="let date of schedule?.dates">
+    <ng-container *ngFor="let element of date?.games">
+        <div *ngIf="element.gameDate.toLocaleDateString('en-US') == dpDate.toLocaleDateString('en-US')">
+            <mat-card>
+                <div style="overflow: hidden;">
+                    <p class="name">{{element.teams.away.team.name}}</p>
+                    <div *ngIf="element.status.abstractGameState == 'Final'">
+                        <p class="score">{{element.teams.away.score}}</p>
+                    </div>
+                </div>
+                <div style="overflow: hidden;">
+                    <p class="name">{{element.teams.home.team.name}}</p>
+                    <div *ngIf="element.status.abstractGameState == 'Final'">
+                        <p class="score">{{element.teams.home.score}}</p>
+                    </div>
+                </div>
+                <div *ngIf="!(element.status.abstractGameState == 'Final')">
+                    <p class="time">{{element.gameDate | date:'H:mm'}}</p>
+                </div>
+            </mat-card>
+        </div>
+    </ng-container>
+</ng-container>

@@ -1,0 +1,217 @@
+<mat-form-field appearance="fill">
+    <mat-label>Choose a season</mat-label>
+    <mat-select [(value)]="selectedSeason" (selectionChange)="changeSeason(selectedSeason)">
+        <mat-option *ngFor="let season of optionalSeasons" [value]="season">
+            {{season}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<div *ngIf="!divisions && !conferences && !playoffs && !standings">
+    <mat-spinner></mat-spinner>
+</div>
+<mat-tab-group>
+    <div *ngIf="divisions">
+        <mat-tab label="Division">
+            <ng-template matTabContent>
+                <div *ngFor="let division of divisions?.records">
+                    <h2 style="text-align: center;">{{division.division.name}}</h2>
+                    <mat-table [dataSource]="division.teamRecords" class="mat-elevation-z8">
+                        <ng-container matColumnDef="rank">
+                            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.divisionRank}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.team.name}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="games">
+                            <mat-header-cell *matHeaderCellDef>Games</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.gamesPlayed}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="wins">
+                            <mat-header-cell *matHeaderCellDef>Wins</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.wins}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="losses">
+                            <mat-header-cell *matHeaderCellDef>Losses</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.losses}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="ot">
+                            <mat-header-cell *matHeaderCellDef>Ot</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.ot}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="goals">
+                            <mat-header-cell *matHeaderCellDef>Goals</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.goalsScored}}:{{element.goalsAgainst}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="points">
+                            <mat-header-cell *matHeaderCellDef>Points</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.points}}
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </div>
+    <div *ngIf="conferences">
+        <mat-tab label="Conference">
+            <ng-template matTabContent>
+                <div *ngFor="let conference of conferences?.records">
+                    <h2 style="text-align: center;">{{conference.conference.name}}</h2>
+                    <mat-table [dataSource]="conference.teamRecords" class="mat-elevation-z8">
+                        <ng-container matColumnDef="rank">
+                            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.conferenceRank}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.team.name}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="games">
+                            <mat-header-cell *matHeaderCellDef>Games</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.gamesPlayed}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="wins">
+                            <mat-header-cell *matHeaderCellDef>Wins</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.wins}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="losses">
+                            <mat-header-cell *matHeaderCellDef>Losses</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.losses}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="ot">
+                            <mat-header-cell *matHeaderCellDef>Ot</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.ot}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="goals">
+                            <mat-header-cell *matHeaderCellDef>Goals</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.goalsScored}}:{{element.goalsAgainst}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="points">
+                            <mat-header-cell *matHeaderCellDef>Points</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.points}}
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </div>
+    <div *ngIf="standings">
+        <mat-tab label="League">
+            <ng-template matTabContent>
+                <div *ngFor="let standing of standings?.records">
+                    <mat-table [dataSource]="standing.teamRecords" class="mat-elevation-z8">
+                        <ng-container matColumnDef="rank">
+                            <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRank}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.team.name}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="games">
+                            <mat-header-cell *matHeaderCellDef>Games</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.gamesPlayed}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="wins">
+                            <mat-header-cell *matHeaderCellDef>Wins</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.wins}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="losses">
+                            <mat-header-cell *matHeaderCellDef>Losses</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.losses}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="ot">
+                            <mat-header-cell *matHeaderCellDef>Ot</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.leagueRecord.ot}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="goals">
+                            <mat-header-cell *matHeaderCellDef>Goals</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.goalsScored}}:{{element.goalsAgainst}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="points">
+                            <mat-header-cell *matHeaderCellDef>Points</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                {{element.points}}
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </div>
+    <div *ngIf="playoffs">
+        <mat-tab label="Playoff">
+            <ng-template matTabContent>
+                <mat-tab-group>
+                    <ng-container *ngFor="let playoff of playoffs?.rounds">
+                        <mat-tab [label]="playoff.names.name">
+                            <ng-container *ngFor="let series of playoff?.series">
+                                <mat-card>
+                                    <div *ngFor="let element of series.matchupTeams">
+                                        <div style="overflow: hidden;">
+                                            <p class="name">{{element.team.name}}</p>
+                                            <p class="wins">{{element.seriesRecord.wins}}</p>
+                                        </div>
+                                    </div>
+                                </mat-card>
+                            </ng-container>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+            </ng-template>
+        </mat-tab>
+    </div>
+</mat-tab-group>
